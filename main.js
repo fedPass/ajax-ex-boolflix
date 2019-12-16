@@ -30,9 +30,16 @@ $(document).ready(function(){
                     console.log('titolo originale: ' + titolo_originale);
                     console.log('lingua: ' + lingua);
                     console.log('voto: ' + voto);
+                    //mostramelo in pagina
+                    $('#display_container').append(`<div class="card">
+                        <ul>
+                            <li>Titolo: `+ titolo + `</li>
+                            <li>Titolo originale: `+ titolo_originale + `</li>
+                            <li>Lingua: `+ lingua + `</li>
+                            <li>Voto: `+ voto + `</li>
+                        </ul>
+                    </div>`);
                 }
-
-                // se le parole cercate sono contenute nel titolo in lista --> mostrarlo
             },
             'error': function(){
                 alert('errore');
