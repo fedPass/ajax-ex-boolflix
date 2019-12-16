@@ -19,17 +19,11 @@ $(document).ready(function(){
             'success': function(response){
                 //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
                 var film_list = response.results;
-
-                console.log(film_list);
                 for (var i = 0; i < film_list.length; i++) {
                     var titolo = film_list[i].title;
                     var titolo_originale = film_list[i].original_title;
                     var lingua = film_list[i].original_language;
                     var voto = film_list[i].vote_average;
-                    console.log('titolo: ' + titolo);
-                    console.log('titolo originale: ' + titolo_originale);
-                    console.log('lingua: ' + lingua);
-                    console.log('voto: ' + voto);
                     //mostramelo in pagina
                     $('#display_container').append(`<div class="card">
                         <ul>
@@ -40,9 +34,17 @@ $(document).ready(function(){
                         </ul>
                     </div>`);
                 }
+                //svuoto il value dell'input
+                $('#search_container input').val('');
+                //ma il valore di film_searched resta ultimo valore inserito
+                film_searched = '';
+                console.log(film_searched);
             },
-            'error': function(){
-                alert('errore');
+            'error': function(error){
+                //se non inserisci nulla
+                if (error.status == 422) {
+                    alert('non hai inserito qualcosa di valido')
+                }
             }
 
         });
