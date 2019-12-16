@@ -63,3 +63,10 @@ main {
     width: 100%;
     height: calc(100vh - 70px);
 }
+
+#display_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
