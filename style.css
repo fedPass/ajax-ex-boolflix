@@ -5,5 +5,61 @@
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+    clear: both;
+}
+
+/* -----header------ */
+
+header {
+    background-color: #3a444e;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+}
+
+#logo_container {
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+
+#logo {
+    font-weight: bold;
+    color: #EFDC05;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+#search_container {
+    float: left;
+    width: 60%;
+    height: 100%;
+    text-align: right;
+}
+
+#search_container input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none
+}
+
+#search_container button {
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+/* -----main------ */
+
+main {
     background-color: #1E2D3B;
+    width: 100%;
+    height: calc(100vh - 70px);
 }
