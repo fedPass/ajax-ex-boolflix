@@ -17,10 +17,22 @@ $(document).ready(function(){
             'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + film_searched,
             'method':'get',
             'success': function(response){
-                //confrontare il titolo cercato con titoli in lista
-                // se le parole cercate sono contenute nel titolo in lista --> mostrarlo (Titolo, Titolo Originale, Lingua, Voto)
-                console.log(response);
-                //
+                //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
+                var film_list = response.results;
+
+                console.log(film_list);
+                for (var i = 0; i < film_list.length; i++) {
+                    var titolo = film_list[i].title;
+                    var titolo_originale = film_list[i].original_title;
+                    var lingua = film_list[i].original_language;
+                    var voto = film_list[i].vote_average;
+                    console.log('titolo: ' + titolo);
+                    console.log('titolo originale: ' + titolo_originale);
+                    console.log('lingua: ' + lingua);
+                    console.log('voto: ' + voto);
+                }
+
+                // se le parole cercate sono contenute nel titolo in lista --> mostrarlo
             },
             'error': function(){
                 alert('errore');
