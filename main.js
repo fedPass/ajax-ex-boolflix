@@ -2,6 +2,8 @@ $(document).ready(function(){
 
     //al click sul button devo
     $('#search_container button').click(function () {
+        //prima di tutto devo cancellare tutte le card eventualmente già visibili (perchè se no mi aggiunge valori sotto)
+        $('.card').remove();
         //leggere il value dell'input
         var film_searched = $('#search_container input').val();
         console.log(film_searched);
@@ -36,9 +38,6 @@ $(document).ready(function(){
                 }
                 //svuoto il value dell'input
                 $('#search_container input').val('');
-                //ma il valore di film_searched resta ultimo valore inserito
-                film_searched = '';
-                console.log(film_searched);
             },
             'error': function(error){
                 //se non inserisci nulla
@@ -46,7 +45,6 @@ $(document).ready(function(){
                     alert('non hai inserito qualcosa di valido')
                 }
             }
-
         });
     });
 });
