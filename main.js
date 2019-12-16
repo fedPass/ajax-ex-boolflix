@@ -34,6 +34,8 @@ function cerca_film () {
                 var titolo_originale = film_list[i].original_title;
                 var lingua = film_list[i].original_language;
                 var voto = film_list[i].vote_average;
+                var numero_stelle = Math.ceil(voto/2);
+                console.log(titolo + ': ' + numero_stelle);
                 //mostramelo in pagina
                 $('#display_container').append(`<div class="card">
                     <ul>
@@ -41,8 +43,14 @@ function cerca_film () {
                         <li>Titolo originale: `+ titolo_originale + `</li>
                         <li>Lingua: `+ lingua + `</li>
                         <li>Voto: `+ voto + `</li>
+                        <li class="display_stelle"></li>
                     </ul>
                 </div>`);
+                //inserisci stelle
+                $('.display_stelle').append('<i class="fas fa-star"></i>');
+                // for (var i = 0; i < numero_stelle; i++) {
+                //     $('.display_stelle').append('<i class="fas fa-star"></i>');
+                // }
             }
             //svuoto il value dell'input
             $('#search_container input').val('');

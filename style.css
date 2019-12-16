@@ -88,6 +88,11 @@ main {
     padding-bottom: 10px;
 }
 
+.display_stelle i {
+    padding: 7px;
+    font-size: 25px;
+}
+
 #error {
     background-color: #efdc05;
     color: #050505;
