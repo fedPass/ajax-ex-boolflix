@@ -70,42 +70,8 @@ $(document).ready(function(){
             var voto = risultati[i].vote_average;
             var numero_stelle = Math.ceil(voto/2);
             console.log(titolo + ': ' + numero_stelle);
-            //uso variabile vuota perchè stringhe
-            var stelle = '';
-            //faccio il ciclo per il num di elementi totali
-            for (var j = 0; j < 5; j++) {
-                //se il num di stelle è minore del numero_stelle stampo stella piena
-                if (j < numero_stelle) {
-                    stelle += '<i class="fas fa-star"></i>';
-                } else {
-                    //se non ho raggiunto numero_stelle stampo stella vuota
-                    stelle += '<i class="far fa-star"></i>';
-                }
-            }
-            var bandiera = '';
-            switch (lingua) {
-              case "it":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/it.svg" alt="bandiera it">';
-                break;
-              case "en":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg" alt="bandiera it">';
-                break;
-              case "fr":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/fr.svg" alt="bandiera it">';
-                break;
-              case "pt":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/pt.svg" alt="bandiera it">';
-                break;
-              case "es":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/es.svg" alt="bandiera it">';
-                break;
-              case "cn":
-                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/cn.svg" alt="bandiera it">';
-                break;
-              default:
-                bandiera = lingua;
-            }
-
+            var bandiera = seleziona_bandiera(lingua);
+            var stelle = crea_stelle(numero_stelle);
             var context = {
                 'title':titolo,
                 'original_title':titolo_originale,
@@ -115,6 +81,56 @@ $(document).ready(function(){
             var html = template_function(context);
             $('#display_container').append(html);
         }
+    }
+
+    function crea_stelle(numero_stelle) {
+        //uso variabile vuota perchè stringhe
+        var stelle = '';
+        //faccio il ciclo per il num di elementi totali
+        for (var j = 0; j < 5; j++) {
+            //se il num di stelle è minore del numero_stelle stampo stella piena
+            if (j < numero_stelle) {
+                stelle += '<i class="fas fa-star"></i>';
+            } else {
+                //se non ho raggiunto numero_stelle stampo stella vuota
+                stelle += '<i class="far fa-star"></i>';
+            }
+        }
+        return stelle;
+    }
+
+    function seleziona_bandiera(lingua) {
+        //prendi la bandiera in base alla lingua
+        var bandiera = '';
+        switch (lingua) {
+          case "it":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/it.svg" alt="bandiera it">';
+            break;
+          case "de":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/de.svg" alt="bandiera it">';
+            break;
+          case "ja":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/jp.svg" alt="bandiera it">';
+          break;
+          case "en":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg" alt="bandiera it">';
+            break;
+          case "fr":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/fr.svg" alt="bandiera it">';
+            break;
+          case "pt":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/pt.svg" alt="bandiera it">';
+            break;
+          case "es":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/es.svg" alt="bandiera it">';
+            break;
+          case "cn":
+            bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/cn.svg" alt="bandiera it">';
+            break;
+          default:
+            bandiera = lingua;
+        }
+        return bandiera;
     }
 
     function display_error() {
