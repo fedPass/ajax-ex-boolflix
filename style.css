@@ -12,6 +12,11 @@ body {
     width: 80%;
     margin: 0 auto;
     height: 100%;
+}
+
+.container::after {
+    display: table;
+    content: '';
     clear: both;
 }
 
@@ -64,8 +69,23 @@ main {
     min-height: calc(100vh - 70px);
 }
 
-#display_container {
+main .container {
     padding: 50px 0;
+}
+
+.etichetta_sezione {
+    float: left;
+    width: 6%;
+}
+
+.etichetta_sezione h2 {
+    display: none;
+    color: #EFDC05;
+}
+
+#display_film, #display_serieTv {
+    float: right;
+    width: 94%;
     display: flex;
     justify-content: center;
     align-items: center;
