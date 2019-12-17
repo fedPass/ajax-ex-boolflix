@@ -82,10 +82,34 @@ $(document).ready(function(){
                     stelle += '<i class="far fa-star"></i>';
                 }
             }
+            var bandiera = '';
+            switch (lingua) {
+              case "it":
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/it.svg" alt="bandiera it">';
+                break;
+              case "en":
+                console.log("Le mele costano €0.64 al chilo.");
+                break;
+              case "fr":
+                console.log("Le banane costano €0.92 al chilo.");
+                break;
+              case "pt":
+                console.log("Le ciliegie costano €2.59 al chilo.");
+                break;
+              case "es":
+                console.log("Le ciliegie costano €2.59 al chilo.");
+                break;
+              case "ch":
+                console.log("I manghi e le papaye costano €1.79 al chilo.");
+                break;
+              default:
+                bandiera = lingua;
+            }
+
             var context = {
                 'title':titolo,
                 'original_title':titolo_originale,
-                'lang':lingua,
+                'lang':bandiera,
                 'rating':stelle
             };
             var html = template_function(context);

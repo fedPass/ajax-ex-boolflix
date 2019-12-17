@@ -104,6 +104,10 @@ main {
     color: #EFDC05;
 }
 
+#bandiera img {
+    height: 20px;
+}
+
 #error {
     background-color: #efdc05;
     color: #050505;
