@@ -47,9 +47,23 @@ function cerca_film () {
                     </ul>
                 </div>`);
                 //inserisci stelle
+                //se faccio la prova così le inserisce
                 // $('.display_stelle').append('<i class="fas fa-star"></i>');
+                //appena metto ciclo for impazzisce
                 // for (var i = 0; i < numero_stelle; i++) {
                 //     $('.display_stelle').append('<i class="fas fa-star"></i>');
+                // }
+
+                //prova con ciclo diverso
+                // var i = 0
+                // while (i < numero_stelle) {
+                //     $('.display_stelle').append('<i class="fas fa-star"></i>');
+                //     i++;
+                // }
+
+                //inserisco stelline vuote rimanenti
+                // while ($('.display_stelle').length = 5) {
+                //     $('.display_stelle').append('<i class="far fa-star"></i>');
                 // }
             }
             //svuoto il value dell'input
