@@ -45,7 +45,12 @@ $(document).ready(function(){
             'success': function(response){
                 //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
                 var film_list = response.results;
-                stampa_risultati(film_list);
+                if (film_list.length != 0 ) {
+                    stampa_risultati(film_list);
+                } else {
+                    display_error();
+                }
+
             },
             'error': function(error){
                 //se non inserisci nulla
@@ -90,7 +95,7 @@ $(document).ready(function(){
 
     function display_error() {
         $('#display_container').append(`<div id="error">
-            <strong>Non ha inserito qualcosa di valido</strong>
+            <strong>Non hai inserito un titolo valido oppure il film non è presente in database</strong>
         </div>`);
     }
 });
