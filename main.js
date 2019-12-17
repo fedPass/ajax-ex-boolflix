@@ -8,9 +8,7 @@ $(document).ready(function(){
         if (film_searched.length != 0) {
             cerca_film();
         } else {
-            $('#display_container').append(`<div id="error">
-                <strong>Non ha inserito qualcosa di valido</strong>
-            </div>`);
+            display_error()
         }
     });
 
@@ -29,15 +27,15 @@ $(document).ready(function(){
         var film_searched = $('#search_container input').val();
         console.log(film_searched);
         //fare una chiamata API per recuperare i titoli in database
-        // var api_base = 'https://api.themoviedb.org/3';
-        // var api_key = '545efb8b9373f473ca0a15eafe64304';
+        var api_base = 'https://api.themoviedb.org/3';
+        var api_key = '545efb8b9373f473ca0a15eafe64304c';
         $.ajax({
-            'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + film_searched,
-            // 'url': api_base + '/search/movie',
-            // 'data' : {
-            //     'api_key': api_key,
-            //     'query': film_searched
-            // },
+            // 'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + film_searched,
+            'url': api_base + '/search/movie',
+            'data' : {
+                'api_key': api_key,
+                'query': film_searched
+            },
             'method':'get',
             'success': function(response){
                 var template_html = $("#film-template").html();
@@ -49,47 +47,28 @@ $(document).ready(function(){
                     var titolo_originale = film_list[i].original_title;
                     var lingua = film_list[i].original_language;
                     var voto = film_list[i].vote_average;
+                    var numero_stelle = Math.ceil(voto/2);
+                    console.log(titolo + ': ' + numero_stelle);
+                    //uso variabile vuota perchè uso stringhe
+                    var stelle = '';
+                    //faccio il ciclo per il num di elementi totali
+                    for (var j = 0; j < 5; j++) {
+                        //se il num di stelle è minore del numero_stelle stampo stella piena
+                        if (j < numero_stelle) {
+                            stelle += '<i class="fas fa-star"></i>';
+                        } else {
+                            //se non ho raggiunto numero_stelle stampo stella vuota
+                            stelle += '<i class="far fa-star"></i>';
+                        }
+                    }
                     var context = {
                         'title':titolo,
                         'original_title':titolo_originale,
                         'lang':lingua,
-                        'rating':voto
+                        'rating':stelle
                     };
                     var html = template_function(context);
                     $('#display_container').append(html);
-
-                    var numero_stelle = Math.ceil(voto/2);
-                    console.log(titolo + ': ' + numero_stelle);
-                    //mostramelo in pagina
-                    // $('#display_container').append(`<div class="card">
-                    //     <ul>
-                    //         <li>Titolo: `+ titolo + `</li>
-                    //         <li>Titolo originale: `+ titolo_originale + `</li>
-                    //         <li>Lingua: `+ lingua + `</li>
-                    //         <li>Voto: `+ voto + `</li>
-                    //         <li class="display_stelle"></li>
-                    //     </ul>
-                    // </div>`);
-                    
-                    //inserisci stelle
-                    //se faccio la prova così le inserisce
-                    // $('.display_stelle').append('<i class="fas fa-star"></i>');
-                    //appena metto ciclo for impazzisce
-                    // for (var i = 0; i < numero_stelle; i++) {
-                    //     $('.display_stelle').append('<i class="fas fa-star"></i>');
-                    // }
-
-                    //prova con ciclo diverso
-                    // var i = 0
-                    // while (i < numero_stelle) {
-                    //     $('.display_stelle').append('<i class="fas fa-star"></i>');
-                    //     i++;
-                    // }
-
-                    //inserisco stelline vuote rimanenti
-                    // while ($('.display_stelle').length = 5) {
-                    //     $('.display_stelle').append('<i class="far fa-star"></i>');
-                    // }
                 }
                 //svuoto il value dell'input
                 $('#search_container input').val('');
@@ -97,11 +76,15 @@ $(document).ready(function(){
             'error': function(error){
                 //se non inserisci nulla
                 if (error.status == 422) {
-                    $('#display_container').append(`<div id="error">
-                        <strong>Non ha inserito qualcosa di valido</strong>
-                    </div>`);
+                    display_error()
                 }
             }
         });
     }
 });
+
+function display_error() {
+    $('#display_container').append(`<div id="error">
+        <strong>Non ha inserito qualcosa di valido</strong>
+    </div>`);
+}
