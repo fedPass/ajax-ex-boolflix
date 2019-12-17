@@ -23,10 +23,19 @@ function cerca_film () {
     var film_searched = $('#search_container input').val();
     console.log(film_searched);
     //fare una chiamata API per recuperare i titoli in database
+    // var api_base = 'https://api.themoviedb.org/3';
+    // var api_key = '545efb8b9373f473ca0a15eafe64304';
     $.ajax({
         'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + film_searched,
+        // 'url': api_base + '/search/movie',
+        // 'data' : {
+        //     'api_key': api_key,
+        //     'query': film_searched
+        // },
         'method':'get',
         'success': function(response){
+            var template_html = $("#film-template").html();
+            var template_function = Handlebars.compile(template_html);
             //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
             var film_list = response.results;
             for (var i = 0; i < film_list.length; i++) {
@@ -34,18 +43,27 @@ function cerca_film () {
                 var titolo_originale = film_list[i].original_title;
                 var lingua = film_list[i].original_language;
                 var voto = film_list[i].vote_average;
+                var context = {
+                    'title':titolo,
+                    'original_title':titolo_originale,
+                    'lang':lingua,
+                    'rating':voto
+                };
+                var html = template_function(context);
+                $('#display_container').append(html);
+
                 var numero_stelle = Math.ceil(voto/2);
                 console.log(titolo + ': ' + numero_stelle);
                 //mostramelo in pagina
-                $('#display_container').append(`<div class="card">
-                    <ul>
-                        <li>Titolo: `+ titolo + `</li>
-                        <li>Titolo originale: `+ titolo_originale + `</li>
-                        <li>Lingua: `+ lingua + `</li>
-                        <li>Voto: `+ voto + `</li>
-                        <li class="display_stelle"></li>
-                    </ul>
-                </div>`);
+                // $('#display_container').append(`<div class="card">
+                //     <ul>
+                //         <li>Titolo: `+ titolo + `</li>
+                //         <li>Titolo originale: `+ titolo_originale + `</li>
+                //         <li>Lingua: `+ lingua + `</li>
+                //         <li>Voto: `+ voto + `</li>
+                //         <li class="display_stelle"></li>
+                //     </ul>
+                // </div>`);
                 //inserisci stelle
                 //se faccio la prova così le inserisce
                 // $('.display_stelle').append('<i class="fas fa-star"></i>');
