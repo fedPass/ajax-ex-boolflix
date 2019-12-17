@@ -88,9 +88,20 @@ main {
     padding-bottom: 10px;
 }
 
-.display_stelle i {
-    padding: 7px;
-    font-size: 25px;
+.card li:first-child {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card li:last-child {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.card i {
+    padding: 6px;
+    font-size: 20px;
+    color: #EFDC05;
 }
 
 #error {
