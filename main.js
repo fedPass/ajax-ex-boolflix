@@ -88,19 +88,19 @@ $(document).ready(function(){
                 bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/it.svg" alt="bandiera it">';
                 break;
               case "en":
-                console.log("Le mele costano €0.64 al chilo.");
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg" alt="bandiera it">';
                 break;
               case "fr":
-                console.log("Le banane costano €0.92 al chilo.");
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/fr.svg" alt="bandiera it">';
                 break;
               case "pt":
-                console.log("Le ciliegie costano €2.59 al chilo.");
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/pt.svg" alt="bandiera it">';
                 break;
               case "es":
-                console.log("Le ciliegie costano €2.59 al chilo.");
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/es.svg" alt="bandiera it">';
                 break;
-              case "ch":
-                console.log("I manghi e le papaye costano €1.79 al chilo.");
+              case "cn":
+                bandiera = '<img src="https://lipis.github.io/flag-icon-css/flags/4x3/cn.svg" alt="bandiera it">';
                 break;
               default:
                 bandiera = lingua;
