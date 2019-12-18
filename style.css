@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .container {
@@ -59,6 +59,8 @@ header {
     border-radius: 50%;
     padding: 5px;
     margin-left: 10px;
+    background-color: #EFDC05;
+    border-color: #cfc01a;
 }
 
 /* -----main------ */
@@ -92,28 +94,45 @@ main .container {padding: 50px 0;}
 .card {
     background-color: #2e3a46;
     width: 250px;
-    min-height: 200px;
+    height: 550px;
     color: #fff;
     padding: 15px;
     margin: 15px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
 }
-.card ul {list-style: none;}
-.card li {padding-bottom: 10px;}
 
-.card li:first-child {
+.locandina {
+    width: 220px;
+    height: 300px;
+    border: 0.5px solid #454545;
+}
+
+.locandina img {
+    width: 100%;
+    height: 100%;
+}
+
+.info_film ul {
+    list-style: none;
+    padding-top: 15px;
+}
+.info_film li {
+    padding-bottom: 10px;
+}
+
+.info_film li:first-child {
     color: #f0e786;
     font-size: 20px;
+    font-weight: bold;
 }
 
-.card li:last-child {
+.info_film li:last-child {
     text-align: center;
     padding-top: 10px;
 }
 
-.card i {
+.info_film i {
     padding: 6px;
     font-size: 20px;
     color: #EFDC05;

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BoolFlix</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
@@ -34,13 +34,15 @@
         </main>
         <script id="film-template" type="text/x-handlebars-template">
             <div class="card">
-                <ul>
-                    <img class="locandina" src="{{{locandina}}}" alt="locandina {{title}}">
-                    <li>{{title}}</li>
-                    <li>Titolo originale: {{original_title}}</li>
-                    <li class="bandiera">Lingua: {{{lang}}}</li>
-                    <li>{{{rating}}}</li>
-                </ul>
+                <div class="locandina"><img src="{{{locandina}}}" alt="locandina {{title}}"></div>
+                <div class="info_film">
+                    <ul>
+                        <li>{{title}}</li>
+                        <li>Titolo originale: {{original_title}}</li>
+                        <li class="bandiera">Lingua: {{{lang}}}</li>
+                        <li>{{{rating}}}</li>
+                    </ul>
+                </div>
             </div>
         </script>
         <script src="main.js" charset="utf-8"></script>
