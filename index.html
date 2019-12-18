@@ -35,13 +35,15 @@
         <script id="film-template" type="text/x-handlebars-template">
             <div class="card">
                 <div class="locandina"><img src="{{{locandina}}}" alt="locandina {{title}}"></div>
-                <div class="info_film">
-                    <ul>
-                        <li>{{title}}</li>
-                        <li>Titolo originale: {{original_title}}</li>
-                        <li class="bandiera">Lingua: {{{lang}}}</li>
-                        <li>{{{rating}}}</li>
-                    </ul>
+                <div class="box_info_film">
+                    <div class="info_film_top">
+                        <span class="titolo">{{title}}</span>
+                        <span>Titolo originale: {{original_title}}</span>
+                    </div>
+                    <div class="info_film_bottom">
+                        <span class="bandiera">Lingua: {{{lang}}}</span>
+                        <span class="stelle">{{{rating}}}</span>
+                    </div>
                 </div>
             </div>
         </script>

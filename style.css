@@ -113,26 +113,34 @@ main .container {padding: 50px 0;}
     height: 100%;
 }
 
-.info_film ul {
-    list-style: none;
+.box_info_film {
+    height: calc(100% - 330px);
     padding-top: 15px;
-}
-.info_film li {
-    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.info_film li:first-child {
+.box_info_film span {
+    padding: 5px 0;
+    display: block;
+}
+
+.info_film_bottom {
+    text-align: center;
+}
+
+.titolo {
     color: #f0e786;
     font-size: 20px;
     font-weight: bold;
 }
 
-.info_film li:last-child {
-    text-align: center;
+.stelle {
     padding-top: 10px;
 }
 
-.info_film i {
+.stelle i {
     padding: 6px;
     font-size: 20px;
     color: #EFDC05;
