@@ -27,7 +27,7 @@ $(document).ready(function(){
             cerca_film(typed_text);
             cerca_serie(typed_text);
         } else {
-            display_error();
+            alert('Digita qualcosa da cercare');
         }
     }
 
@@ -47,15 +47,17 @@ $(document).ready(function(){
                 if (film_list.length != 0 ) {
                     stampa_risultati(film_list);
                 } else {
-                    //se non trova nulla (da sistemare dopo)
-                    display_error();
+                    //se non trova nulla
+                    $('#display_film').append(`<div id="error">
+                        <strong>Film non presente in database</strong>
+                    </div>`);
                 }
 
             },
             'error': function(error){
                 //se non inserisci nulla
                 if (error.status == 422) {
-                    display_error()
+                    alert('Digita qualcosa da cercare');
                 }
             }
         });
@@ -77,14 +79,16 @@ $(document).ready(function(){
                 if (serieTv_list.length != 0 ) {
                     stampa_risultati(serieTv_list);
                 } else {
-                    //se non trova nulla (da sistemare dopo)
-                    display_error();
+                    //se non trova nulla
+                    $('#display_serieTv').append(`<div id="error">
+                        <strong>Serie non presente in database</strong>
+                    </div>`);
                 }
             },
             'error': function(error){
                 //se non inserisci nulla
                 if (error.status == 422) {
-                    display_error()
+                    alert('Digita qualcosa da cercare');
                 }
             }
         });
@@ -92,13 +96,12 @@ $(document).ready(function(){
 
     function stampa_risultati(risultati){
         $('.etichetta_sezione h2').show();
-        //estraggo info su ogni film
+        //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
             var titoli = restituisci_titoli(risultati[i]);
             var titolo = titoli[0];
             var titolo_originale = titoli[1];
             var contenitore = titoli[2];
-
             // var img_copertina =
             var lingua = risultati[i].original_language;
             var voto = risultati[i].vote_average;
@@ -120,7 +123,6 @@ $(document).ready(function(){
 
     function restituisci_titoli(elemente_esaminato) {
         var titoli = [];
-
         //se ha title è film
         if(elemente_esaminato.hasOwnProperty('title')) {
             var titolo = elemente_esaminato.title;
@@ -138,9 +140,7 @@ $(document).ready(function(){
             var titolo_originale = elemente_esaminato.original_name;
             var contenitore = $('#display_serieTv');
         }
-
         titoli.push(titolo, titolo_originale, contenitore);
-
         return titoli;
     }
 
@@ -192,11 +192,5 @@ $(document).ready(function(){
             bandiera = lingua;
         }
         return bandiera;
-    }
-
-    function display_error() {
-        $('#display_film').append(`<div id="error">
-            <strong>Non hai inserito un titolo valido oppure il film non è presente in database</strong>
-        </div>`);
     }
 });
