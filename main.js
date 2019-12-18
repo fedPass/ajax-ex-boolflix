@@ -4,6 +4,7 @@ $(document).ready(function(){
     var template_function = Handlebars.compile(template_html);
     var api_base = 'https://api.themoviedb.org/3';
     var api_key = '545efb8b9373f473ca0a15eafe64304c';
+    var link_base_locandina = 'https://image.tmdb.org/t/p/w185';
 
     //reazione al click
     $('#search_container button').click(nuova_ricerca);
@@ -52,7 +53,6 @@ $(document).ready(function(){
                         <strong>Film non presente in database</strong>
                     </div>`);
                 }
-
             },
             'error': function(error){
                 //se non inserisci nulla
@@ -102,7 +102,7 @@ $(document).ready(function(){
             var titolo = titoli[0];
             var titolo_originale = titoli[1];
             var contenitore = titoli[2];
-            // var img_copertina =
+            var img_locandina = link_base_locandina + risultati[i].poster_path;
             var lingua = risultati[i].original_language;
             var voto = risultati[i].vote_average;
             var numero_stelle = Math.ceil(voto/2);
@@ -110,7 +110,7 @@ $(document).ready(function(){
             var bandiera = seleziona_bandiera(lingua);
             var stelle = crea_stelle(numero_stelle);
             var context = {
-                // 'copertina':
+                'locandina': img_locandina,
                 'title':titolo,
                 'original_title':titolo_originale,
                 'lang':bandiera,

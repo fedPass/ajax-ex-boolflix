@@ -69,9 +69,7 @@ main {
     min-height: calc(100vh - 70px);
 }
 
-main .container {
-    padding: 50px 0;
-}
+main .container {padding: 50px 0;}
 
 .etichetta_sezione {
     float: left;
@@ -103,9 +101,7 @@ main .container {
     align-items: center;
 }
 .card ul {list-style: none;}
-.card li {
-    padding-bottom: 10px;
-}
+.card li {padding-bottom: 10px;}
 
 .card li:first-child {
     color: #f0e786;
