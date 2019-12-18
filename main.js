@@ -4,7 +4,7 @@ $(document).ready(function(){
     var template_function = Handlebars.compile(template_html);
     var api_base = 'https://api.themoviedb.org/3';
     var api_key = '545efb8b9373f473ca0a15eafe64304c';
-    var link_base_locandina = 'https://image.tmdb.org/t/p/w185';
+    var link_base_locandina = 'https://image.tmdb.org/t/p/w342';
 
     //reazione al click
     $('#search_container button').click(nuova_ricerca);
@@ -70,7 +70,7 @@ $(document).ready(function(){
             'url': api_base + '/search/tv',
             'data' : {
                 'api_key': api_key,
-                'query': typed_text
+                'query': typed_text,
             },
             'method':'get',
             'success': function(response){
@@ -109,12 +109,14 @@ $(document).ready(function(){
             console.log(titolo + ':' + numero_stelle);
             var bandiera = seleziona_bandiera(lingua);
             var stelle = crea_stelle(numero_stelle);
+            var trama = risultati[i].overview;
             var context = {
                 'locandina': img_locandina,
                 'title':titolo,
                 'original_title':titolo_originale,
                 'lang':bandiera,
-                'rating':stelle
+                'rating':stelle,
+                'overview':trama
             };
             var html_film = template_function(context);
             contenitore.append(html_film);
