@@ -10,9 +10,7 @@ $(document).ready(function(){
 
     //reazione al INVIO
     $('#search_container input').keypress(function(event){
-        if (event.which == 13) {
-            nuova_ricerca();
-        }
+        if (event.which == 13) {nuova_ricerca();}
     });
 
     function nuova_ricerca(){
@@ -43,9 +41,9 @@ $(document).ready(function(){
                 'query': typed_text
             },
             'method':'get',
-            'success': function(response_film){
+            'success': function(response){
                 //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
-                var film_list = response_film.results;
+                var film_list = response.results;
                 if (film_list.length != 0 ) {
                     stampa_risultati(film_list);
                 } else {
@@ -73,9 +71,9 @@ $(document).ready(function(){
                 'query': typed_text
             },
             'method':'get',
-            'success': function(response_serieTv){
+            'success': function(response){
                 //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
-                var serieTv_list = response_serieTv.results;
+                var serieTv_list = response.results;
                 if (serieTv_list.length != 0 ) {
                     stampa_risultati(serieTv_list);
                 } else {
@@ -96,32 +94,39 @@ $(document).ready(function(){
         $('.etichetta_sezione h2').show();
         //estraggo info su ogni film
         for (var i = 0; i < risultati.length; i++) {
-            var titoloSerieTv = risultati[i].name;
-            var titoloFilm = risultati[i].title;
-            var titolo_originale = risultati[i].original_title;
+            //un modo era verificare se esiste title o name e quindi se è film o serie e il quale contenitore lo appenderò
+            //se ha title è film
+            if(risultati[i].hasOwnProperty('title')) {
+                var titolo = risultati[i].title;
+                // definisco il contenitore dove poi appenderò (film)
+                var contenitore = $('#display_film');
+            } else {
+                //altrimenti ha name ed è serie
+                var titolo = risultati[i].name;
+                var contenitore = $('#display_serieTv');
+            }
+            if (risultati[i].hasOwnProperty('original_title')) {
+                var titolo_originale = risultati[i].original_title;
+                // definisco il contenitore dove poi appenderò (serie)
+            } else {
+                var titolo_originale = risultati[i].original_name;
+            }
+            // var img_copertina =
             var lingua = risultati[i].original_language;
             var voto = risultati[i].vote_average;
             var numero_stelle = Math.ceil(voto/2);
-            console.log(titoloFilm + ' (film): ' + numero_stelle);
-            console.log(titoloSerieTv + ' (serie): ' + numero_stelle);
+            console.log(titolo + ':' + numero_stelle);
             var bandiera = seleziona_bandiera(lingua);
             var stelle = crea_stelle(numero_stelle);
-            var context_film = {
-                'title':titoloFilm,
+            var context = {
+                // 'copertina':
+                'title':titolo,
                 'original_title':titolo_originale,
                 'lang':bandiera,
                 'rating':stelle
             };
-            var context_serieTv = {
-                'title':titoloSerieTv,
-                'original_title':titolo_originale,
-                'lang':bandiera,
-                'rating':stelle
-            };
-            var html_film = template_function(context_film);
-            $('#display_film').append(html_film);
-            var html_serieTv = template_function(context_serieTv);
-            $('#display_serieTv').append(html_serieTv);
+            var html_film = template_function(context);
+            contenitore.append(html_film);
         }
     }
 
