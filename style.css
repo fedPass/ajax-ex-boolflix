@@ -109,7 +109,7 @@ main .container {
 }
 
 .card li:first-child {
-    font-weight: bold;
+    color: #f0e786;
     font-size: 20px;
 }
 
@@ -126,6 +126,7 @@ main .container {
 
 .bandiera img {
     height: 20px;
+    vertical-align: middle;
 }
 
 #error {

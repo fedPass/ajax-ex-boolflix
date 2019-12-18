@@ -94,23 +94,11 @@ $(document).ready(function(){
         $('.etichetta_sezione h2').show();
         //estraggo info su ogni film
         for (var i = 0; i < risultati.length; i++) {
-            //un modo era verificare se esiste title o name e quindi se è film o serie e il quale contenitore lo appenderò
-            //se ha title è film
-            if(risultati[i].hasOwnProperty('title')) {
-                var titolo = risultati[i].title;
-                // definisco il contenitore dove poi appenderò (film)
-                var contenitore = $('#display_film');
-            } else {
-                //altrimenti ha name ed è serie
-                var titolo = risultati[i].name;
-                var contenitore = $('#display_serieTv');
-            }
-            if (risultati[i].hasOwnProperty('original_title')) {
-                var titolo_originale = risultati[i].original_title;
-                // definisco il contenitore dove poi appenderò (serie)
-            } else {
-                var titolo_originale = risultati[i].original_name;
-            }
+            var titoli = restituisci_titoli(risultati[i]);
+            var titolo = titoli[0];
+            var titolo_originale = titoli[1];
+            var contenitore = titoli[2];
+
             // var img_copertina =
             var lingua = risultati[i].original_language;
             var voto = risultati[i].vote_average;
@@ -128,6 +116,32 @@ $(document).ready(function(){
             var html_film = template_function(context);
             contenitore.append(html_film);
         }
+    }
+
+    function restituisci_titoli(elemente_esaminato) {
+        var titoli = [];
+
+        //se ha title è film
+        if(elemente_esaminato.hasOwnProperty('title')) {
+            var titolo = elemente_esaminato.title;
+            // definisco il contenitore dove poi appenderò (film)
+            var contenitore = $('#display_film');
+        } else {
+            //altrimenti ha name ed è serie
+            var titolo = elemente_esaminato.name;
+            var contenitore = $('#display_serieTv');
+        }
+        if (elemente_esaminato.hasOwnProperty('original_title')) {
+            var titolo_originale = elemente_esaminato.original_title;
+            var contenitore = $('#display_film');
+        } else {
+            var titolo_originale = elemente_esaminato.original_name;
+            var contenitore = $('#display_serieTv');
+        }
+
+        titoli.push(titolo, titolo_originale, contenitore);
+
+        return titoli;
     }
 
     function crea_stelle(numero_stelle) {
