@@ -101,10 +101,6 @@ main {
     margin: 1px;
     position: relative;
 }
-/* .card:hover {
-    transform: scale(1.05);
-} */
-
 .card:hover .locandina {
     display: none;
 }
