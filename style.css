@@ -42,6 +42,10 @@ header {
     letter-spacing: 1px;
 }
 
+#logo_mobile {
+    display: none;
+}
+
 #search_container {
     float: left;
     width: 60%;
@@ -178,4 +182,32 @@ main .container {padding: 50px 0;}
     border-radius: 5px;
     letter-spacing: 0.50px;
     margin-left: 15px;
+}
+
+/* ----media query----- */
+
+@media screen and (max-width: 500px) {
+    .container {
+        width: 90%;
+    }
+
+  #logo {
+    display: none;
+  }
+
+  #logo_mobile {
+    display: inline;
+    background-color: #EFDC05;
+    padding: 0 7px;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 39px;
+  }
+
+  #logo_container {
+      width: 25%;
+  }
+  #search_container {
+      width: 75%;
+  }
 }
