@@ -14,6 +14,12 @@ $(document).ready(function(){
         if (event.which == 13) {nuova_ricerca();}
     });
 
+    $(document).on('click','.card',function(){
+        console.log('click su card');
+        $(this).children('.locandina').toggle();
+        $(this).children('.box_info_film').toggle();
+    });
+
     function nuova_ricerca(){
         //leggere il value dell'input
         var typed_text = $('#search_container input').val();
@@ -99,7 +105,7 @@ $(document).ready(function(){
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
             var titoli = restituisci_titoli(risultati[i]);
-            var contenitore = titoli[2];
+            var contenitore = titoli.tipologia;
             var lingua = risultati[i].original_language;
             var bandiera = seleziona_bandiera(lingua);
             var voto = risultati[i].vote_average;
@@ -113,8 +119,8 @@ $(document).ready(function(){
             }
             var context = {
                 'locandina': img_locandina,
-                'title':titoli[0],
-                'original_title':titoli[1],
+                'title':titoli.titolo,
+                'original_title':titoli.titolo_originale,
                 'lang':bandiera,
                 'rating':stelle,
                 'overview':trama
@@ -125,25 +131,28 @@ $(document).ready(function(){
     }
 
     function restituisci_titoli(elemente_esaminato) {
-        var titoli = [];
+        var titoli = {
+            'titolo':'',
+            'titolo_originale':'',
+            'tipologia':''
+        };
         //se ha title è film
         if(elemente_esaminato.hasOwnProperty('title')) {
-            var titolo = elemente_esaminato.title;
+            titoli.titolo = elemente_esaminato.title;
             // definisco il contenitore dove poi appenderò (film)
-            var contenitore = $('#display_film');
+            titoli.tipologia = $('#display_film');
         } else {
             //altrimenti ha name ed è serie
-            var titolo = elemente_esaminato.name;
-            var contenitore = $('#display_serieTv');
+            titoli.titolo = elemente_esaminato.name;
+            titoli.tipologia = $('#display_serieTv');
         }
         if (elemente_esaminato.hasOwnProperty('original_title')) {
-            var titolo_originale = elemente_esaminato.original_title;
-            var contenitore = $('#display_film');
+            titoli.titolo_originale = elemente_esaminato.original_title;
+            titoli.tipologia = $('#display_film');
         } else {
-            var titolo_originale = elemente_esaminato.original_name;
-            var contenitore = $('#display_serieTv');
+            titoli.titolo_originale = elemente_esaminato.original_name;
+            titoli.tipologia = $('#display_serieTv');
         }
-        titoli.push(titolo, titolo_originale, contenitore);
         return titoli;
     }
 

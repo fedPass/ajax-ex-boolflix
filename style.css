@@ -98,15 +98,25 @@ main .container {padding: 50px 0;}
     color: #fff;
     border: 0.5px solid #454545;
     margin: 15px;
-    display: flex;
-    flex-direction: column;
     position: relative;
     margin-top: 0;
 }
+.card:hover {
+    transform: scale(1.05);
+}
+
 .card:hover .locandina {
     display: none;
 }
 .card:hover .box_info_film {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
     display: block;
 }
 
@@ -137,7 +147,7 @@ main .container {padding: 50px 0;}
 .box_info_film span:last-child {
     font-size: 14px;
     overflow-y: auto;
-    height: 260px;
+    height: 240px;
 }
 
 .titolo {
