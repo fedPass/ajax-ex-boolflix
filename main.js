@@ -101,7 +101,7 @@ $(document).ready(function(){
     }
 
     function stampa_risultati(risultati){
-        $('.etichetta_sezione h2').show();
+        $('.etichetta_sezione').show();
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
             var titoli = restituisci_titoli(risultati[i]);

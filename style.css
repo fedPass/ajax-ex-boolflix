@@ -73,24 +73,18 @@ main {
     background-color: #1E2D3B;
     width: 100%;
     min-height: calc(100vh - 70px);
+    padding: 50px 0;
 }
-
-main .container {padding: 50px 0;}
 
 .etichetta_sezione {
-    background-color: #EFDC05;
-    float: left;
-    width: 11%;
-}
-
-.etichetta_sezione h2 {
     display: none;
-    padding: 5px;
+    background-color: #EFDC05;
+    width: max-content;
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
 #display_film, #display_serieTv {
-    float: right;
-    width: 89%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -209,5 +203,10 @@ main .container {padding: 50px 0;}
   }
   #search_container {
       width: 75%;
+  }
+
+  .etichetta_sezione {
+      width: 100%;
+      text-align: center;
   }
 }
