@@ -135,7 +135,9 @@ main .container {padding: 50px 0;}
 }
 
 .box_info_film span:last-child {
+    font-size: 14px;
     overflow-y: auto;
+    height: 260px;
 }
 
 .titolo {
@@ -163,6 +165,7 @@ main .container {padding: 50px 0;}
     background-color: #efdc05;
     color: #050505;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 5px;
     letter-spacing: 0.50px;
+    margin-left: 15px;
 }
