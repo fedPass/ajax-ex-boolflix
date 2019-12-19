@@ -99,21 +99,22 @@ $(document).ready(function(){
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
             var titoli = restituisci_titoli(risultati[i]);
-            var titolo = titoli[0];
-            var titolo_originale = titoli[1];
             var contenitore = titoli[2];
-            var img_locandina = link_base_locandina + risultati[i].poster_path;
             var lingua = risultati[i].original_language;
+            var bandiera = seleziona_bandiera(lingua);
             var voto = risultati[i].vote_average;
             var numero_stelle = Math.ceil(voto/2);
-            console.log(titolo + ':' + numero_stelle);
-            var bandiera = seleziona_bandiera(lingua);
             var stelle = crea_stelle(numero_stelle);
             var trama = risultati[i].overview;
+            if (risultati[i].poster_path != null) {
+                var img_locandina = link_base_locandina + risultati[i].poster_path;
+            } else {
+                var img_locandina = 'http://www.cinemaedera.it/images/no_locandina.jpg';
+            }
             var context = {
                 'locandina': img_locandina,
-                'title':titolo,
-                'original_title':titolo_originale,
+                'title':titoli[0],
+                'original_title':titoli[1],
                 'lang':bandiera,
                 'rating':stelle,
                 'overview':trama

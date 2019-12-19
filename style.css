@@ -109,9 +109,7 @@ main .container {padding: 50px 0;}
 .card:hover .box_info_film {
     display: block;
 }
-/* .card:hover {
-    height: 500px;
-} */
+
 .locandina {
     width: 100%;
     height: 100%;
@@ -124,7 +122,8 @@ main .container {padding: 50px 0;}
     display: none;
     height: 100%;
     width: 100%;
-    background-color: #818180;
+    background-color: #3a444e;
+    border: 1px solid #EFDC05;
     padding: 15px;
     position: absolute;
     top: 0;
@@ -136,7 +135,7 @@ main .container {padding: 50px 0;}
 }
 
 .box_info_film span:last-child {
-    text-align: center;
+    overflow-y: auto;
 }
 
 .titolo {
