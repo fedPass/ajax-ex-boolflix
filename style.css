@@ -82,11 +82,14 @@ main {
     width: max-content;
     margin-bottom: 20px;
     padding: 10px;
+    width: 100%;
+    text-align: center;
 }
 
 #display_film, #display_serieTv {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
@@ -95,26 +98,17 @@ main {
     height: 450px;
     color: #fff;
     border: 0.5px solid #454545;
-    margin: 15px;
+    margin: 1px;
     position: relative;
-    margin-top: 0;
 }
-.card:hover {
+/* .card:hover {
     transform: scale(1.05);
-}
+} */
 
 .card:hover .locandina {
     display: none;
 }
 .card:hover .box_info_film {
-    display: block;
-}
-
-.hidden {
-    display: none;
-}
-
-.visible {
     display: block;
 }
 
@@ -204,9 +198,3 @@ main {
   #search_container {
       width: 75%;
   }
-
-  .etichetta_sezione {
-      width: 100%;
-      text-align: center;
-  }
-}
