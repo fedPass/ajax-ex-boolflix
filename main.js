@@ -13,9 +13,18 @@ $(document).ready(function(){
     $('#search_container input').keypress(function(event){
         if (event.which == 13) {nuova_ricerca();}
     });
-
-    $(document).on('click','.card',function(){
-        console.log('click su card');
+    //al click sulla card appare/scompare tab info
+    $('#display_film, #display_serieTv').on('click','.card',function(){
+        // if ($(this).children('.locandina').is(':visible')) {
+        //     $(this).children('.locandina').hide();
+        // } else {
+        //     $(this).children('.locandina').show();
+        // }
+        // if ($(this).children('.box_info_film').is(':visible')) {
+        //     $(this).children('.box_info_film').hide();
+        // } else {
+        //     $(this).children('.box_info_film').show();
+        // }
         $(this).children('.locandina').toggle();
         $(this).children('.box_info_film').toggle();
     });
@@ -72,7 +81,7 @@ $(document).ready(function(){
     function cerca_serie (typed_text) {
         //fare una chiamata API per recuperare i titoli delle serie in database
         $.ajax({
-            // 'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + typed_text,
+            // 'url':'https://api.themoviedb.org/3/search/tv?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + typed_text,
             'url': api_base + '/search/tv',
             'data' : {
                 'api_key': api_key,
@@ -104,59 +113,90 @@ $(document).ready(function(){
         $('.etichetta_sezione').show();
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
-            var titoli = restituisci_titoli(risultati[i]);
-            var contenitore = titoli.tipologia;
+
+            var info = restituisci_titoli_tipologia_linkCast(risultati[i]);
+            var contenitore = info.tipologia;
+            //estraggo la lingua e uso funzione per trovare bandiera
             var lingua = risultati[i].original_language;
             var bandiera = seleziona_bandiera(lingua);
+            //estraggo il voto in base 10, lo trasformo in base 5 e uso funzione per convertire in stelle
             var voto = risultati[i].vote_average;
             var numero_stelle = Math.ceil(voto/2);
             var stelle = crea_stelle(numero_stelle);
+            //estraggo trama
             var trama = risultati[i].overview;
+            //verifico se esiste locandina
             if (risultati[i].poster_path != null) {
                 var img_locandina = link_base_locandina + risultati[i].poster_path;
+                //eventualmente uso una standard
             } else {
                 var img_locandina = 'http://www.cinemaedera.it/images/no_locandina.jpg';
             }
+            //estraggo il codice
             var codice = risultati[i].id;
-            //dovrò fare una chiamata a
+            //creo un oggetto che contenga le informazioni estratte
             var context = {
                 'id':codice,
                 'locandina': img_locandina,
-                'title':titoli.titolo,
-                'original_title':titoli.titolo_originale,
+                'title':info.titolo,
+                'original_title':info.titolo_originale,
                 'lang':bandiera,
                 'rating':stelle,
                 'overview':trama
             };
+            //uso le info per compilare il template
             var html_film = template_function(context);
+            //appendo il template nel relativo div (che ho assegnato con la funzione restutuisci...)
             contenitore.append(html_film);
+
+            //chiamata ajax per recuperare cast film
+            $.ajax({
+                //https://api.themoviedb.org/3/tv/{tv_id}/credits?api_key=<<api_key>>&language=en-US
+                //chiamata cast film --> /movie/+/credits
+                //chiamata cast serie --> /tv/{tv_id}/credits
+                'url': api_base + info.link,
+                'data' : {
+                    'api_key': api_key,
+                },
+                'method':'get',
+                'success': function(response_cast){
+                    console.log(response_cast.cast);
+                },
+                'error':function(){
+                    console.log('error');
+                }
+            });
         }
     }
 
-    function restituisci_titoli(elemente_esaminato) {
-        var titoli = {
+    function restituisci_titoli_tipologia_linkCast(elemente_esaminato) {
+        var info_elemento_esaminato = {
             'titolo':'',
             'titolo_originale':'',
-            'tipologia':''
+            'tipologia':'',
+            'link':''
         };
         //se ha title è film
         if(elemente_esaminato.hasOwnProperty('title')) {
-            titoli.titolo = elemente_esaminato.title;
-            // definisco il contenitore dove poi appenderò (film)
-            titoli.tipologia = $('#display_film');
+            info_elemento_esaminato.titolo = elemente_esaminato.title;
+            // definisco il contenitore dove poi appenderò
+            info_elemento_esaminato.tipologia = $('#display_film');
+            info_elemento_esaminato.link = '/movie/'+ elemente_esaminato.id +'/credits';
+
         } else {
             //altrimenti ha name ed è serie
-            titoli.titolo = elemente_esaminato.name;
-            titoli.tipologia = $('#display_serieTv');
+            info_elemento_esaminato.titolo = elemente_esaminato.name;
+            info_elemento_esaminato.tipologia = $('#display_serieTv');
+            info_elemento_esaminato.link = '/tv/'+ elemente_esaminato.id +'/credits';
         }
         if (elemente_esaminato.hasOwnProperty('original_title')) {
-            titoli.titolo_originale = elemente_esaminato.original_title;
-            titoli.tipologia = $('#display_film');
+            info_elemento_esaminato.titolo_originale = elemente_esaminato.original_title;
+            info_elemento_esaminato.tipologia = $('#display_film');
         } else {
-            titoli.titolo_originale = elemente_esaminato.original_name;
-            titoli.tipologia = $('#display_serieTv');
+            info_elemento_esaminato.titolo_originale = elemente_esaminato.original_name;
+            info_elemento_esaminato.tipologia = $('#display_serieTv');
         }
-        return titoli;
+        return info_elemento_esaminato;
     }
 
     function crea_stelle(numero_stelle) {
