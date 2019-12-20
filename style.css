@@ -160,6 +160,10 @@ main {
     vertical-align: middle;
 }
 
+.cast {
+    overflow-x: hidden;
+}
+
 #error {
     background-color: #efdc05;
     color: #050505;
