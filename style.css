@@ -161,7 +161,8 @@ main {
 }
 
 .cast {
-    overflow-x: hidden;
+    font-size: 12px;
+    color: #f8f3b7;
 }
 
 #error {

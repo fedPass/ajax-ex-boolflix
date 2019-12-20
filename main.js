@@ -148,7 +148,7 @@ $(document).ready(function(){
             };
             //uso le info per compilare il template
             var html_film = template_function(context);
-            //appendo il template nel relativo div (che ho assegnato con la funzione restutuisci...)
+            //appendo il template nel relativo contenitore
             contenitore.append(html_film);
 
             //chiamata ajax per recuperare cast film
@@ -163,24 +163,23 @@ $(document).ready(function(){
                 'method':'get',
                 'success': function(response_cast){
                     //mi restituisce un array con la lista del cast del fiml
-                    console.log(response_cast.cast);
                     var lista_cast = response_cast.cast;
                     //inserisci in una lista ogni attore
                     var nomi_cast = '';
                     //scorri gli elementi della lista e prendi il nome
                     //devo stampare solo i primi 5 nomi
-                    for (var k = 0; k < lista_cast.length; k++) {
-                        nomi_cast += lista_cast[k].name + ', ';
+                    if (lista_cast.length == 0) {
+                        console.log('Info cast non presenti');
+                        // $('.card').find('.cast').text('Info cast non presenti');
+                    } else {
+                        for (var k = 0; k < lista_cast.length; k++) {
+                            nomi_cast += lista_cast[k].name + ', ';
+                        }
+                        console.log(nomi_cast);
+                        //prendi la card che ha data-id uguale a codice, prendi suo figlio cast e riempilo con nomi_cast
+                        // $('.card[data-id="' + codice + '"]').find('.cast').text('Cast: ' + nomi_cast);
+                        $('.card').find('.cast').text('Cast: ' + nomi_cast);
                     }
-                    console.log(nomi_cast);
-                    //devo inserire questa lista in cast
-
-                    //prendi la card che ha data-id uguale a codice, prendi suo figlio cast e riempilo con nomi_cast
-
-                    //attr('data-id', codice).children('.cast').text(nomi_cast);
-
-                    //prende il codice dell'ultima card
-                    console.log(codice);
                 },
                 'error':function(){
                     alert('error');
