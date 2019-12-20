@@ -118,8 +118,9 @@ $(document).ready(function(){
                 var img_locandina = 'http://www.cinemaedera.it/images/no_locandina.jpg';
             }
             var codice = risultati[i].id;
-            console.log(codice);
+            //dovrò fare una chiamata a
             var context = {
+                'id':codice,
                 'locandina': img_locandina,
                 'title':titoli.titolo,
                 'original_title':titoli.titolo_originale,

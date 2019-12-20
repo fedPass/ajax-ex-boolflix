@@ -104,6 +104,7 @@ main {
 .card:hover .locandina {
     display: none;
 }
+
 .card:hover .box_info_film {
     display: block;
 }
