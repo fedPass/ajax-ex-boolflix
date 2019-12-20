@@ -58,9 +58,10 @@ $(document).ready(function(){
             },
             'method':'get',
             'success': function(response){
-                //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
+                //se ricevo qualcosa come risultato
                 var film_list = response.results;
                 if (film_list.length != 0 ) {
+                    //passo l'array alla funzione di stampa
                     stampa_risultati(film_list);
                 } else {
                     //se non trova nulla
@@ -89,9 +90,10 @@ $(document).ready(function(){
             },
             'method':'get',
             'success': function(response){
-                //per ogni risultato della chiamata in lista recupera Titolo, Titolo Originale, Lingua, Voto
+                //se mi restituisce qualcosa
                 var serieTv_list = response.results;
                 if (serieTv_list.length != 0 ) {
+                    //mando in stampa
                     stampa_risultati(serieTv_list);
                 } else {
                     //se non trova nulla
@@ -108,12 +110,12 @@ $(document).ready(function(){
             }
         });
     }
-
+    //estraggo info e le stampo in div apposito
     function stampa_risultati(risultati){
         $('.etichetta_sezione').show();
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
-
+            //creo un array in cui inserisco alcune info e stabilisco il contenitore
             var info = restituisci_titoli_tipologia_linkCast(risultati[i]);
             var contenitore = info.tipologia;
             //estraggo la lingua e uso funzione per trovare bandiera
@@ -160,7 +162,18 @@ $(document).ready(function(){
                 },
                 'method':'get',
                 'success': function(response_cast){
+                    //mi restituisce un array la lista del cast
                     console.log(response_cast.cast);
+                    var lista_cast = response_cast.cast;
+                    //inserisci in una lista ogni attore
+                    var nomi_cast = '';
+                    //scorri gli elementi della lista e prendi il nome
+                    for (var k = 0; k < lista_cast.length; k++) {
+                        nomi_cast += lista_cast[k].name + ', ';
+                        console.log(nomi_cast);
+                        //devo inserire questa lista in cast
+                        // contenitore.children('cast').text('');
+                    }
                 },
                 'error':function(){
                     console.log('error');
