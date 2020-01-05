@@ -150,6 +150,9 @@ main {
     color: #fff;
     border: 0.5px solid #454545;
     position: relative;
+    /*ultima agg*/
+    transition: transform 1s;
+    transform-style: preserve-3d;
 }
 /* .card:hover .locandina {
     display: none;
@@ -162,22 +165,30 @@ main {
 .locandina {
     width: 100%;
     height: 100%;
+    backface-visibility: hidden;
 }
 .locandina img {
     width: 100%;
     height: 100%;
 }
 .box_info_film {
-    display: none;
+    /* display: none; */
+    backface-visibility: hidden;
     height: 100%;
     width: 100%;
     background-color: #3a444e;
     border: 1px solid #EFDC05;
     padding: 15px;
+    transform: rotateY( 180deg );
     position: absolute;
     top: 0;
     left: 0;
 }
+
+.card:hover {
+  transform: rotateY(180deg);
+}
+
 .box_info_film span {
     padding: 5px 0;
     display: block;
