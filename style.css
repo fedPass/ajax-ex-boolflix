@@ -8,13 +8,22 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+li {
+    display: inline;
+}
+
 .container {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     height: 100%;
 }
 
-.container::after {
+.strip {
+    width: 100%;
+    height: 100%;
+}
+
+.clearfix {
     display: table;
     content: '';
     clear: both;
@@ -24,31 +33,71 @@ body {
 
 header {
     background-color: #3a444e;
+    color: #EFDC05;
     width: 100%;
     height: 70px;
     line-height: 70px;
 }
 
+/* ----logo container---- */
+
 #logo_container {
     float: left;
-    width: 40%;
+    width: 20%;
     height: 100%;
 }
 
-#logo {
-    font-weight: bold;
-    color: #EFDC05;
-    font-size: 30px;
-    letter-spacing: 1px;
+#logo_mobile {
+  display: inline;
+  background-color: #EFDC05;
+  padding: 0 7px;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 39px;
+  color: #1E2D3B;
 }
 
-#logo_mobile {
+#logo {
     display: none;
 }
 
+/*-----type nav-----*/
+#type_nav {
+    float: left;
+    width: 40%;
+    height: 100%;
+    visibility: hidden;
+    text-align: center;
+}
+
+#type_nav li {
+    font-size: 18px;
+    margin-right: 10px;
+
+}
+
+.activeButton{
+    background-color: yellow;
+    color: #1e2d3b;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+#type_nav li i {
+    font-size: 20px;
+}
+
+#see_film span,
+#see_serieTv span {
+    display: none;
+}
+
+/* -----search container----- */
+
 #search_container {
     float: left;
-    width: 60%;
+    width: 40%;
     height: 100%;
     text-align: right;
 }
@@ -56,7 +105,8 @@ header {
 #search_container input {
     padding: 5px;
     border-radius: 5px;
-    border: none
+    border: none;
+    width: 60px;
 }
 
 #search_container button {
@@ -73,7 +123,8 @@ main {
     background-color: #1E2D3B;
     width: 100%;
     min-height: calc(100vh - 70px);
-    padding: 50px 0;
+    padding-top: 15px;
+    padding-bottom: 50px;
 }
 
 .etichetta_sezione {
@@ -94,20 +145,19 @@ main {
 
 .card {
     background-color: #2e3a46;
-    width: 300px;
-    height: 450px;
+    width: 100%;
+    /* height: 450px; */
     color: #fff;
     border: 0.5px solid #454545;
-    margin: 1px;
     position: relative;
 }
-.card:hover .locandina {
+/* .card:hover .locandina {
     display: none;
 }
 
 .card:hover .box_info_film {
     display: block;
-}
+} */
 
 .locandina {
     width: 100%;
@@ -176,27 +226,47 @@ main {
 
 /* ----media query----- */
 
-@media screen and (max-width: 500px) {
-    .container {
-        width: 90%;
+@media screen and (min-width: 768px) {
+    .card {
+        width: 50%;
     }
 
-  #logo {
-    display: none;
-  }
+    #logo_mobile {
+        display: none;
+    }
 
-  #logo_mobile {
-    display: inline;
-    background-color: #EFDC05;
-    padding: 0 7px;
-    border-radius: 14px;
-    font-weight: bold;
-    font-size: 39px;
-  }
+    #logo {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 30px;
+        letter-spacing: 1px;
+    }
 
-  #logo_container {
-      width: 25%;
-  }
-  #search_container {
-      width: 75%;
-  }
+    #search_container input {
+        width: 170px;
+    }
+
+    #type_nav li {
+        margin-right: 24px;
+    }
+
+    #see_film span,
+    #see_serieTv span {
+        display: inline-block;
+    }
+
+    #type_nav li i {
+    margin-right: 15px;
+    }
+
+    #type_nav {
+    text-align: left;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .card {
+        width: 20%;
+    }
+
+}

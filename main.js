@@ -13,20 +13,47 @@ $(document).ready(function(){
     $('#search_container input').keypress(function(event){
         if (event.which == 13) {nuova_ricerca();}
     });
+
     //al click sulla card appare/scompare tab info
     $('#display_film, #display_serieTv').on('click','.card',function(){
-        // if ($(this).children('.locandina').is(':visible')) {
-        //     $(this).children('.locandina').hide();
-        // } else {
-        //     $(this).children('.locandina').show();
-        // }
-        // if ($(this).children('.box_info_film').is(':visible')) {
-        //     $(this).children('.box_info_film').hide();
-        // } else {
-        //     $(this).children('.box_info_film').show();
-        // }
+        $('.locandina').show();
+        $('.box_info_film').hide();
+        // $(".card").not("this").attr('opacity','0.2');
         $(this).children('.locandina').toggle();
         $(this).children('.box_info_film').toggle();
+    });
+
+    //al muoseleenter
+    $('#display_film, #display_serieTv').on('mouseenter','.card',function(){
+        $('.locandina').show();
+        $('.box_info_film').hide();
+        $(this).children('.locandina').toggle();
+        $(this).children('.box_info_film').toggle();
+    });
+
+    //al muoseleave
+    $('#display_film, #display_serieTv').on('mouseleave','.card',function(){
+        $(this).children('.locandina').toggle();
+        $(this).children('.box_info_film').toggle();
+    });
+
+    //click su film per visualizzare lista film_list
+    $('header').on('click','#see_film', function(){
+        //nascondi serie tv e mostra film_list
+        $('#see_film').addClass('activeButton');
+        $('#see_serieTv').removeClass('activeButton');
+        $('.strip.serietv').hide();
+        $('.strip.film').show();
+    });
+
+    //click su serietv per lsta serietv
+    $('header').on('click','#see_serieTv', function(){
+        //nascondi serie tv e mostra film_list
+        $('#see_film').removeClass('activeButton');
+        $('#see_serieTv').addClass('activeButton');
+        $('.strip.film').hide();
+        $('.strip.serietv').show();
+
     });
 
     function nuova_ricerca(){
@@ -112,11 +139,13 @@ $(document).ready(function(){
     }
     //estraggo info e le stampo in div apposito
     function stampa_risultati(risultati){
-        $('.etichetta_sezione').show();
+        //rendi visibile il menù film/serietv
+        $('#type_nav').css('visibility','visible');
         //estraggo info su ogni film o serie
         for (var i = 0; i < risultati.length; i++) {
             //creo un array in cui inserisco alcune info e stabilisco il contenitore
             var info = restituisci_titoli_tipologia_linkCast(risultati[i]);
+            //predispongo una variabile con cui assegnare il contenitore (film o serie)
             var contenitore = info.tipologia;
             //estraggo la lingua e uso funzione per trovare bandiera
             var lingua = risultati[i].original_language;
@@ -150,6 +179,9 @@ $(document).ready(function(){
             var html_film = template_function(context);
             //appendo il template nel relativo contenitore
             contenitore.append(html_film);
+            $('#see_film').addClass('activeButton');
+            $('#see_serieTv').removeClass('activeButton');
+            $('.strip.serietv').hide();
 
             //chiamata ajax per recuperare cast film
             $.ajax({
@@ -162,23 +194,25 @@ $(document).ready(function(){
                 },
                 'method':'get',
                 'success': function(response_cast){
+                    // stampa_risultati(risultati);
                     //mi restituisce un array con la lista del cast del fiml
                     var lista_cast = response_cast.cast;
                     //inserisci in una lista ogni attore
+                    //devo creare un oggetto così gli do i valori data-id/codice e nomi cast
                     var nomi_cast = '';
                     //scorri gli elementi della lista e prendi il nome
                     //devo stampare solo i primi 5 nomi
                     if (lista_cast.length == 0) {
                         console.log('Info cast non presenti');
-                        // $('.card').find('.cast').text('Info cast non presenti');
+                        // $('.card[data-id="' + codice + '"]').find('.cast').text('Info cast non presenti');
                     } else {
                         for (var k = 0; k < lista_cast.length; k++) {
                             nomi_cast += lista_cast[k].name + ', ';
                         }
                         console.log(nomi_cast);
                         //prendi la card che ha data-id uguale a codice, prendi suo figlio cast e riempilo con nomi_cast
-                        // $('.card[data-id="' + codice + '"]').find('.cast').text('Cast: ' + nomi_cast);
-                        $('.card').find('.cast').text('Cast: ' + nomi_cast);
+                        $('.card[data-id="' + codice + '"]').find('.cast').text('Cast: ' + nomi_cast);
+                        // $('.card').find('.cast').text('Cast: ' + nomi_cast);
                     }
                 },
                 'error':function(){
