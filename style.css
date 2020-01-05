@@ -213,6 +213,8 @@ main {
 .cast {
     font-size: 12px;
     color: #f8f3b7;
+    height: 50px;
+    overflow-y: hidden;
 }
 
 #error {
@@ -261,6 +263,11 @@ main {
 
     #type_nav {
     text-align: left;
+    }
+
+    .activeButton {
+        padding: 23px;
+        border-radius: 0;
     }
 }
 
