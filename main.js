@@ -163,11 +163,11 @@ $(document).ready(function(){
             } else {
                 var img_locandina = 'http://www.cinemaedera.it/images/no_locandina.jpg';
             }
-            //estraggo il codice
+            //estraggo il codice del film/serie
             var codice_film = risultati[i].id;
-            //estraggo i codici dei generi
+            //estraggo i codici dei generi e uso una funzione per convertirli in lettere
             var id_generi = risultati[i].genre_ids;
-            var generiNomi = recuperaGenereFilm(id_generi);
+            var generiNomi = recupera_genere_film(id_generi);
             //creo un oggetto che contenga le informazioni estratte
             var context = {
                 'id':codice_film,
@@ -231,17 +231,13 @@ $(document).ready(function(){
                     alert('error');
                 }
             });
-
         }
     }
 
-    function recuperaGenereFilm(id_generi) {
+    function recupera_genere_film(id_generi) {
+        //sto passando a questa funzione un array con dentri i codici dei generi del film /serie
         //chiamata per vedere i codici dei generi dei film
         //https://api.themoviedb.org/3/genre/movie/list?api_key=e99307154c6dfb0b4750f6603256716d
-
-        //chiamata per vedere i codici dei generi dei film
-        //https://api.themoviedb.org/3/genre/tv/list?api_key=e99307154c6dfb0b4750f6603256716d
-
         //devo recuperare il nome del genere dal codice
         $.ajax({
             'url': api_base + '/genre/movie/list',
@@ -249,15 +245,25 @@ $(document).ready(function(){
                 'api_key': api_key,
             },
             'method':'get',
-            'success': function(response){
-                //leggi il valore che ti passo a cercalo nella lista dei generi
-                var listaGeneri = '';
-                for (var i = 0; i < genres.length; i++) {
-                    if (genres[i].id == id_genere) {
-                        var nomeGenere = genres.name
-                        listaGeneri += nomeGenere +',';
+            'success': function(response_genre_film){
+                //mi restituisce un array con dentro l'elenco dei generi id e name
+                var listaGeneriFilm = response_genre_film.genres;
+                //creo una variabile vuota in cui inserisco il name del genere se l'id coindice con l'id esaminato
+                var generiFilm = '';
+                //scorro l'array id_generi che ti passo
+                for (var i = 0; i < id_generi.length; i++) {
+                    //prendi id in esame
+                    var current_id = id_generi[i];
+                    //cicla l'elenco dei generi
+                    for(var k = 0; k < listaGeneriFilm.length; k++) {
+                        //se questo id è uguale ad uno di quelli che trovi dentro l'elenco prendi il name del genere
+                        if (current_id == listaGeneriFilm[i].id) {
+                            var nomeGenere = listaGeneriFilm[i].name;
+                            generiFilm += nomeGenere +' ';
+                        }
                     }
                 }
+                console.log('Generi Film: ' + generiFilm);
             },
             'error': function(error){
                     alert('error');
