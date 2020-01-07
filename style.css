@@ -162,7 +162,8 @@ main {
     display: block;
 } */
 
-.locandina {
+.locandina,
+.box_info_film {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
@@ -173,16 +174,11 @@ main {
 }
 .box_info_film {
     /* display: none; */
-    backface-visibility: hidden;
-    height: 100%;
-    width: 100%;
     background-color: #3a444e;
     border: 1px solid #EFDC05;
     padding: 15px;
     transform: rotateY( 180deg );
     position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .card:hover {

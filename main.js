@@ -6,10 +6,10 @@ $(document).ready(function(){
     var api_key = '545efb8b9373f473ca0a15eafe64304c';
     var link_base_locandina = 'https://image.tmdb.org/t/p/w342';
 
-    //reazione al click
+    //reazione al click sl bottone di ricerca
     $('#search_container button').click(nuova_ricerca);
 
-    //reazione al INVIO
+    //reazione al INVIO sul bottone di ricerca
     $('#search_container input').keypress(function(event){
         if (event.which == 13) {nuova_ricerca();}
     });
@@ -18,12 +18,12 @@ $(document).ready(function(){
     $('#display_film, #display_serieTv').on('click','.card',function(){
         $('.locandina').show();
         $('.box_info_film').hide();
-        // $(".card").not("this").attr('opacity','0.2');
+        // $('.card').not('this').attr('opacity','0.2');
         $(this).children('.locandina').toggle();
         $(this).children('.box_info_film').toggle();
     });
 
-    //al muoseleenter
+    //al muoseleenter sulla card appare/scompare tab info
     $('#display_film, #display_serieTv').on('mouseenter','.card',function(){
         $('.locandina').show();
         $('.box_info_film').hide();
@@ -31,7 +31,7 @@ $(document).ready(function(){
         $(this).children('.box_info_film').toggle();
     });
 
-    //al muoseleave
+    //al muoseleave sulla card appare/scompare tab info
     $('#display_film, #display_serieTv').on('mouseleave','.card',function(){
         $(this).children('.locandina').toggle();
         $(this).children('.box_info_film').toggle();
@@ -164,13 +164,17 @@ $(document).ready(function(){
                 var img_locandina = 'http://www.cinemaedera.it/images/no_locandina.jpg';
             }
             //estraggo il codice
-            var codice = risultati[i].id;
+            var codice_film = risultati[i].id;
+            //estraggo i codici dei generi
+            var id_generi = risultati[i].genre_ids;
+            var generiNomi = recuperaGenereFilm(id_generi);
             //creo un oggetto che contenga le informazioni estratte
             var context = {
-                'id':codice,
+                'id':codice_film,
                 'locandina': img_locandina,
                 'title':info.titolo,
                 'original_title':info.titolo_originale,
+                'generi': id_generi, //devo sostituirlo con generiNomi appena scrivo la funzione
                 'lang':bandiera,
                 'rating':stelle,
                 'overview':trama
@@ -186,9 +190,9 @@ $(document).ready(function(){
             //chiamata ajax per recuperare cast film
             $.ajax({
                 //https://api.themoviedb.org/3/tv/{tv_id}/credits?api_key=<<api_key>>&language=en-US
-                //chiamata cast film --> /movie/+/credits
+                //chiamata cast film --> /movie/{tv_id}/credits
                 //chiamata cast serie --> /tv/{tv_id}/credits
-                'url': api_base + info.link,
+                'url': api_base + info.link, //recupero info.link da restituisci_titoli_tipologia_linkCast(elemente_esaminato) al suo interno c'è id
                 'data' : {
                     'api_key': api_key,
                 },
@@ -198,20 +202,28 @@ $(document).ready(function(){
                     //mi restituisce un array con la lista del cast del fiml
                     var lista_cast = response_cast.cast;
                     //inserisci in una lista ogni attore
-                    //devo creare un oggetto così gli do i valori data-id/codice e nomi cast
+                    //devo creare un oggetto così gli do i valori data-id/codice_film e nomi cast
                     var nomi_cast = '';
-                    //scorri gli elementi della lista e prendi il nome
-                    //devo stampare solo i primi 5 nomi
                     if (lista_cast.length == 0) {
                         console.log('Info cast non presenti');
-                        // $('.card[data-id="' + codice + '"]').find('.cast').text('Info cast non presenti');
+                        // $('.card[data-id="' + codice_film + '"]').find('.cast').text('Info cast non presenti');
                     } else {
+                        //scorri gli elementi della lista e prendi il nome
                         for (var k = 0; k < lista_cast.length; k++) {
                             nomi_cast += lista_cast[k].name + ', ';
                         }
-                        console.log(nomi_cast);
+                        console.log(nomi_cast + ' , id genere: '+id_generi);
+                        //devo stampare solo i primi 5 nomi
+                        // if ( nomi_cast.length <= 1 && nomi_cast.length >= 5) {
+                        //      var actor = nomi_cast;
+                        //     console.log(actor);
+                        // } else {
+                        //     var actor = nomi_cast.slice(0, 6);
+                        //     console.log(actor);
+                        // }
+
                         //prendi la card che ha data-id uguale a codice, prendi suo figlio cast e riempilo con nomi_cast
-                        $('.card[data-id="' + codice + '"]').find('.cast').text('Cast: ' + nomi_cast);
+                        $('.card[data-id="' + codice_film + '"]').find('.cast').text('Cast: ' + nomi_cast);
                         // $('.card').find('.cast').text('Cast: ' + nomi_cast);
                     }
                 },
@@ -219,7 +231,38 @@ $(document).ready(function(){
                     alert('error');
                 }
             });
+
         }
+    }
+
+    function recuperaGenereFilm(id_generi) {
+        //chiamata per vedere i codici dei generi dei film
+        //https://api.themoviedb.org/3/genre/movie/list?api_key=e99307154c6dfb0b4750f6603256716d
+
+        //chiamata per vedere i codici dei generi dei film
+        //https://api.themoviedb.org/3/genre/tv/list?api_key=e99307154c6dfb0b4750f6603256716d
+
+        //devo recuperare il nome del genere dal codice
+        $.ajax({
+            'url': api_base + '/genre/movie/list',
+            'data' : {
+                'api_key': api_key,
+            },
+            'method':'get',
+            'success': function(response){
+                //leggi il valore che ti passo a cercalo nella lista dei generi
+                var listaGeneri = '';
+                for (var i = 0; i < genres.length; i++) {
+                    if (genres[i].id == id_genere) {
+                        var nomeGenere = genres.name
+                        listaGeneri += nomeGenere +',';
+                    }
+                }
+            },
+            'error': function(error){
+                    alert('error');
+            }
+        });
     }
 
     function restituisci_titoli_tipologia_linkCast(elemente_esaminato) {
