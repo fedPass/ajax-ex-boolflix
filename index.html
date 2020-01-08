@@ -26,6 +26,12 @@
                 <div id="search_container">
                     <input type="text" placeholder="Cerca">
                     <button type="button" name="button"><i class="fas fa-search iconSearch"></i></button>
+                    <select id="select_lang">
+                        <option value="it">IT</option>
+                        <option value="en">EN</option>
+                        <option value="fr">FR</option>
+                        <option value="es">ES</option>
+                    </select>
                 </div>
             </div>
         </header>
@@ -41,7 +47,9 @@
         </main>
         <script id="film-template" type="text/x-handlebars-template">
             <div class="card" data-id="{{id}}">
-                <div class="locandina"><img src="{{{locandina}}}" alt="locandina {{title}}"></div>
+                <div class="locandina">
+                    <img src="{{{locandina}}}" alt="locandina {{title}}">
+                </div>
                 <div class="box_info_film">
                     <div class="info_film_top">
                         <span class="titolo">{{title}}</span>

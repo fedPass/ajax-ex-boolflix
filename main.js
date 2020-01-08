@@ -6,7 +6,7 @@ $(document).ready(function(){
     var api_key = '545efb8b9373f473ca0a15eafe64304c';
     var link_base_locandina = 'https://image.tmdb.org/t/p/w342';
 
-    //faccio chiamata ajax per recuperare l'elenco genere film
+    //chiamata ajax per recuperare l'elenco genere film
     var listaGeneriFilm = '';
     //https://api.themoviedb.org/3/genre/movie/list?api_key=e99307154c6dfb0b4750f6603256716d
     $.ajax({
@@ -25,7 +25,7 @@ $(document).ready(function(){
         }
     });
 
-    //faccio chiamata ajax per recuperare l'elenco genere serie
+    //chiamata ajax per recuperare l'elenco genere serie
     var listaGeneriSerie = '';
     //https://api.themoviedb.org/3/genre/tv/list?api_key=e99307154c6dfb0b4750f6603256716d
     $.ajax({
@@ -76,7 +76,7 @@ $(document).ready(function(){
         $(this).children('.box_info_film').toggle();
     });
 
-    //click su film per visualizzare lista film_list
+    //click su etichetta film per visualizzare lista film_list
     $('header').on('click','#see_film', function(){
         //nascondi serie tv e mostra film_list
         $('#see_film').addClass('activeButton');
@@ -85,7 +85,7 @@ $(document).ready(function(){
         $('.strip.film').show();
     });
 
-    //click su serietv per lsta serietv
+    //click su etichetta serietv per lsta serietv
     $('header').on('click','#see_serieTv', function(){
         //nascondi serie tv e mostra film_list
         $('#see_film').removeClass('activeButton');
@@ -94,6 +94,8 @@ $(document).ready(function(){
         $('.strip.serietv').show();
 
     });
+
+    //----------funzioni-----------
 
     function nuova_ricerca(){
         //leggere il value dell'input
@@ -106,21 +108,25 @@ $(document).ready(function(){
             $('#error').remove();
             //svuoto il value dell'input
             $('#search_container input').val('');
-            cerca_film(typed_text);
-            cerca_serie(typed_text);
+            //leggi il valore della Lingua
+            var select_lang = $('#select_lang').val()
+            //chiama funzioni per ricerca film e serietv
+            cerca_film(typed_text, select_lang);
+            cerca_serie(typed_text, select_lang);
         } else {
             alert('Digita qualcosa da cercare');
         }
     }
 
-    function cerca_film (typed_text) {
+    function cerca_film (typed_text, lang) {
         //fare una chiamata API per recuperare i titoli dei film in database
         $.ajax({
             // 'url':'https://api.themoviedb.org/3/search/movie?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + typed_text,
             'url': api_base + '/search/movie',
             'data' : {
                 'api_key': api_key,
-                'query': typed_text
+                'query': typed_text,
+                'language': lang
             },
             'method':'get',
             'success': function(response){
@@ -176,6 +182,7 @@ $(document).ready(function(){
             }
         });
     }
+
     //estraggo info e le stampo in div apposito
     function stampa_risultati(risultati){
         //rendi visibile il menù film/serietv
@@ -256,7 +263,7 @@ $(document).ready(function(){
                 } else {
                     //scorri gli elementi della lista e prendi il nome
                     for (var k = 0; k < lista_cast.length && k < 5; k++) {
-                        nomi_cast += lista_cast[k].name + ' ';
+                        nomi_cast += lista_cast[k].name + ', ';
                     }
                     console.log(nomi_cast);
                     //prendi la card che ha data-id uguale a codice, prendi suo figlio cast e riempilo con nomi_cast
@@ -270,24 +277,32 @@ $(document).ready(function(){
         });
     }
 
-    function recupera_genere_film(id_generi) {
+    function recupera_genere_film(id_generi, tipo) {
         //sto passando a questa funzione un array con dentri i codici dei generi del film /serie
         //creo una variabile vuota in cui inserisco il name del genere se l'id coindice con l'id esaminato
         var generiFilm = '';
+
+        //gli dico in quale array cercare
+        if (tipo == 'film') {
+            var arrayGeneri = listaGeneriFilm;
+        } else {
+            var arrayGeneri = listaGeneriSerie;
+        }
         //scorro l'array id_generi che ti passo
         for (var i = 0; i < id_generi.length; i++) {
             //prendi id in esame
             var current_id = id_generi[i];
             //cicla l'elenco dei generi
-            for(var k = 0; k < listaGeneriFilm.length; k++) {
+            for(var k = 0; k < arrayGeneri.length; k++) {
                 //se questo id è uguale ad uno di quelli che trovi dentro l'elenco prendi il name del genere
-                if (current_id == listaGeneriFilm[i].id) {
-                    var nomeGenere = listaGeneriFilm[i].name;
-                    generiFilm += nomeGenere +' ';
+                if (current_id == arrayGeneri[k].id) {
+                    var nomeGenere = arrayGeneri[k].name;
+                    generiFilm += nomeGenere +', ';
                 }
             }
         }
         console.log('Generi Film: ' + generiFilm);
+        return generiFilm;
     }
 
     function restituisci_titoli_tipologia_linkCast(elemente_esaminato) {
