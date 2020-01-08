@@ -7,7 +7,7 @@ $(document).ready(function(){
     var link_base_locandina = 'https://image.tmdb.org/t/p/w342';
 
     //chiamata ajax per recuperare l'elenco genere film
-    var listaGeneriFilm = '';
+    var lista_generi_film = '';
     //https://api.themoviedb.org/3/genre/movie/list?api_key=e99307154c6dfb0b4750f6603256716d
     $.ajax({
         'url': api_base + '/genre/movie/list',
@@ -17,8 +17,8 @@ $(document).ready(function(){
         'method':'get',
         'success': function(response_genre_film){
             //mi restituisce un array con dentro l'elenco dei generi id e name
-            listaGeneriFilm = response_genre_film.genres;
-            console.log(listaGeneriFilm);
+            lista_generi_film = response_genre_film.genres;
+            console.log(lista_generi_film);
         },
         'error': function(error){
                 alert('error');
@@ -26,7 +26,7 @@ $(document).ready(function(){
     });
 
     //chiamata ajax per recuperare l'elenco genere serie
-    var listaGeneriSerie = '';
+    var lista_generi_serie = '';
     //https://api.themoviedb.org/3/genre/tv/list?api_key=e99307154c6dfb0b4750f6603256716d
     $.ajax({
         'url': api_base + '/genre/tv/list',
@@ -36,8 +36,8 @@ $(document).ready(function(){
         'method':'get',
         'success': function(response_genre_serie){
             //mi restituisce un array con dentro l'elenco dei generi id e name
-            var listaGeneriSerie = response_genre_serie.genres;
-            console.log(listaGeneriSerie);
+            var lista_generi_serie = response_genre_serie.genres;
+            console.log(lista_generi_serie);
         },
         'error': function(error){
                 alert('error');
@@ -151,7 +151,7 @@ $(document).ready(function(){
         });
     }
 
-    function cerca_serie (typed_text) {
+    function cerca_serie (typed_text, lang) {
         //fare una chiamata API per recuperare i titoli delle serie in database
         $.ajax({
             // 'url':'https://api.themoviedb.org/3/search/tv?api_key=545efb8b9373f473ca0a15eafe64304c&query=' + typed_text,
@@ -159,6 +159,7 @@ $(document).ready(function(){
             'data' : {
                 'api_key': api_key,
                 'query': typed_text,
+                'language': lang
             },
             'method':'get',
             'success': function(response){
@@ -214,7 +215,7 @@ $(document).ready(function(){
             var codice_film = risultati[i].id;
             //estraggo i codici dei generi e uso una funzione per convertirli in lettere
             var id_generi = risultati[i].genre_ids;
-            var generiNomi = recupera_genere_film(id_generi);
+            var generiNomi = recupera_generi(id_generi);
             //creo un oggetto che contenga le informazioni estratte
             var context = {
                 'id':codice_film,
@@ -277,16 +278,16 @@ $(document).ready(function(){
         });
     }
 
-    function recupera_genere_film(id_generi, tipo) {
+    function recupera_generi(id_generi, tipo) {
         //sto passando a questa funzione un array con dentri i codici dei generi del film /serie
         //creo una variabile vuota in cui inserisco il name del genere se l'id coindice con l'id esaminato
         var generiFilm = '';
 
         //gli dico in quale array cercare
         if (tipo == 'film') {
-            var arrayGeneri = listaGeneriFilm;
+            var arrayGeneri = lista_generi_film;
         } else {
-            var arrayGeneri = listaGeneriSerie;
+            var arrayGeneri = lista_generi_serie;
         }
         //scorro l'array id_generi che ti passo
         for (var i = 0; i < id_generi.length; i++) {
@@ -317,6 +318,7 @@ $(document).ready(function(){
             info_elemento_esaminato.titolo = elemente_esaminato.title;
             // definisco il contenitore dove poi appenderò
             info_elemento_esaminato.tipologia = $('#display_film');
+            //definisco con quale link cercare il cast
             info_elemento_esaminato.link = '/movie/'+ elemente_esaminato.id +'/credits';
 
         } else {
