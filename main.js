@@ -44,12 +44,41 @@ $(document).ready(function(){
         }
     });
 
+    //chiamata ajax per recuperare i trends
+    var lista_trend = '';
+    $.ajax({
+        'url': api_base + '/trending/all/day',
+        'data' : {
+            'api_key': api_key,
+        },
+        'method':'get',
+        'success': function(response_trend){
+            //mi restituisce un array con dentro i trend
+            // console.log(response_trend);
+            lista_trend = response_trend.results;
+            console.log(lista_trend);
+            if (lista_trend.length != 0 ) {
+                //passo l'array alla funzione di stampa
+                stampa_risultati(lista_trend);
+            }
+        },
+        'error': function(error){
+                alert('error');
+        }
+    });
 
     //reazione al click sl bottone di ricerca
-    $('#search_container button').click(nuova_ricerca);
+    $('#search_container button').click(function() {
+        //cambio testo etichetta
+        $('.etichetta').text('Risultati');
+        //avvio ricerca
+        nuova_ricerca();
+    });
 
     //reazione al INVIO sul bottone di ricerca
     $('#search_container input').keypress(function(event){
+        //cambio testo etichetta
+        $('.etichetta').text('Risultati');
         if (event.which == 13) {nuova_ricerca();}
     });
 
@@ -244,7 +273,6 @@ $(document).ready(function(){
             //disattivo sezione delle serie
             $('#see_serieTv').removeClass('activeButton');
             $('.strip.serietv').hide();
-
             //funzione a cui passo tipologia(per link) e id per recuperare il cast
             recupera_cast(codice_film, linkCast);
         }

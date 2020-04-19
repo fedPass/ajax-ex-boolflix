@@ -130,6 +130,10 @@ main {
     padding-top: 15px;
     padding-bottom: 50px;
 }
+.etichetta{
+    color: #EFDC05;
+    margin: 30px;
+}
 
 .etichetta_sezione {
     display: none;
